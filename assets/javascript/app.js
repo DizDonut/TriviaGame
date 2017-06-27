@@ -65,6 +65,7 @@ var game = {
   maxQuestions: 10,
   buttonDisabled: false,
   questionIncrement: 0,
+  questionsAskedArr: [],
   optionsArr: [],
   startingScore: 100,
   accumScore: 0,
@@ -74,19 +75,37 @@ var game = {
 
   randomQuestion: function(){
     var random = this.questionsArr[Math.floor(Math.random() * this.questionsArr.length)].question;
-    console.log(random);
-    $("#question").html(random);
-    this.buttonDisabled = true;
-    if(this.buttonDisabled){
-      $("#question").prop("disabled", true);
+
+    for (var i = 0; i < this.questionsArr.length; i++) {
+      if(this.questionsArr[i].question === random){
+        var a = i;
+        var ans = this.questionsArr[a].answer;
+      }
     }
+    // if(this.questionsArr[a].question === random){
+    //   this.questionsAskedArr.push(random);
+    //   console.log(this.questionsAskedArr);
+    // }
+
+    console.log(random);
+    console.log(a);
+    console.log(ans);
+
+
+    $("#question").html(random);
+    $("#answer1").html(ans)
   },
 
 };
 
 $("document").ready(function(){
 
+
+
   $("#go").on("click", function(){
+    $(".progress-bar").animate({
+      width: "0%"
+    }, 10 * 1000);
     game.randomQuestion();
   });
 

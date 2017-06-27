@@ -9,21 +9,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
-    <div class="jumbotron"></div>
+    <div class="jumbotron">
+      <div class="panel-body">
+        <button id="go" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-facetime-video"></span>Click Here to Start Your Trivia!</button>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="1000" aria-valuemin="0" aria-valuemax="1000" style="width: 100%;"></div>
+      </div>
+    </div>
       <div class="container">
         <div class="row">
-          <div class="col-md 6">
-            <div class="panel panel-default">
-                <div class="panel-heading"></div>
-                  <div class="panel-body">
-                    <button id="go" type="button" class="btn btn-primary" glyphicon="glyphicon-facetime-video" name="button">Click Here to Start Your Trivia!</button>
-                  </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
+            <div class="col-md-6">
+              <div class="panel panel-default">
                 <div class="panel-heading">Question:</div>
                   <div id="question" class="panel-body"></div>
               </div>
+            </div>
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">Results:</div>
+                  <div class="panel-body">
+                    <div id="questions"></div>
+                    <div id="correct"></div>
+                    <div id="incorrect"></div>
+                    <div id="score"></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">Answers:</div>
+                  <div id="answers" class="panel-body">
+                    <div class="btn-group-vertical" role="group">
+                      <button id="answer1" class="btn btn-default" type="button" name="button"></button>
+                      <button id="answer2" class="btn btn-default" type="button" name="button"></button>
+                      <button id="answer3" class="btn btn-default" type="button" name="button"></button>
+                      <button id="answer4" class="btn btn-default" type="button" name="button"></button>
+                    </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
