@@ -39,7 +39,7 @@ var game = {
     question: "What Broadway Musical is based off the opera 'La Bohen'?",
     Answers: ["Rent","Wicked","My Fair Lady","Les Miserables"],
   },{
-    question: "What move featured the fictional band 'The Soggy Bottom Boys'?",
+    question: "What movie featured the fictional band 'The Soggy Bottom Boys'?",
     Answers: ["O Brother, Where Art Thou","The Great Outdoors","Get On Up","That Thing You Do!"],
   },{
     question: "What year did 'The Tonight Show' first air?",
@@ -94,24 +94,61 @@ var game = {
     return answ;
   },
 
+  startProgress: function(){
+    var i = 100;
+    var that = this;
+    var progressCounter = setInterval(function(){
+      i--;
+      if(i > 0)
+      {
+        $(".progress-bar").css("width", i+"%");
+      }else{
+        clearInterval(progressCounter);
+      }
+      $("#answer1").on("click", function(){
+        that.accumScore += that.startingScore;
+        clearInterval(progressCounter);
+      });
+    }, 100);
+  },
+
+  startScore: function(){
+    var that = this;
+    var scoreInterval = setInterval(function() {
+      console.log(that.startingScore);
+      $("#score").html(that.startingScore);
+      that.startingScore--;
+      $("#score").html(that.startingScore);
+      if(that.startingScore === 0)
+      {
+        clearInterval(scoreInterval);
+        alert("Time's Up!");
+      }
+      $("#answer1").on("click", function(){
+        that.accumScore += that.startingScore;
+        clearInterval(scoreInterval)
+      });
+    }, 10);
+
+    this.startingScore = 1000;
+
+  },
+
 };
 
 $("document").ready(function(){
 
 
-
   $("#go").on("click", function(){
-    $(".progress-bar").animate({
-      width: "0%"
-    }, 10 * 1000);
 
+    game.startScore();
+    var progress = game.startProgress();
     random = game.randomNoRepeats();
 
     $("#question").html(game.displayQuestion(random));
     $("#answer1").html(game.displayAnswers(random));
-
-
     $("go").disabled = true;
-  });
 
-});
+  }); //end on click event
+
+}); //end document ready
