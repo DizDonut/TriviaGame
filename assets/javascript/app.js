@@ -84,12 +84,22 @@ var game = {
     return removedItem;
   },
 
+  wrongAnswers: function(arg){
+    var wrong1 = arg[0].Answers[1];
+    var wrong2 = arg[0].Answers[2];
+    var wrong3 = arg[0].Answers[3];
+
+    $("#answer2").html(wrong1);
+    $("#answer3").html(wrong2);
+    $("#answer4").html(wrong3);
+  },
+
   displayQuestion: function(arg1){
     var ques = arg1[0].question;
     return ques;
   },
 
-  displayAnswers: function(arg2){
+  displayAnswer: function(arg2){
     var answ = arg2[0].Answers[0];
     return answ;
   },
@@ -105,30 +115,54 @@ var game = {
       }else{
         clearInterval(progressCounter);
       }
-      $("#answer1").on("click", function(){
-        that.accumScore += that.startingScore;
-        clearInterval(progressCounter);
-      });
     }, 100);
+
+    $("#btn-group").on("click", function(){
+      clearInterval(progressCounter);
+    })
   },
 
   startScore: function(){
     var that = this;
+    var scores = this.startingScore;
     var scoreInterval = setInterval(function() {
-      console.log(that.startingScore);
-      $("#score").html(that.startingScore);
-      that.startingScore--;
-      $("#score").html(that.startingScore);
-      if(that.startingScore === 0)
+      $("#score").html(scores);
+      scores--;
+      $("#score").html(scores);
+      if(scores === 0)
       {
         clearInterval(scoreInterval);
         alert("Time's Up!");
       }
-      $("#answer1").on("click", function(){
-        that.accumScore += that.startingScore;
-        clearInterval(scoreInterval)
-      });
     }, 10);
+
+    $("#answer1").on("click", function(){
+      that.accumScore += scores;
+      that.correctAnswers++;
+      clearInterval(scoreInterval);
+      console.log(that.accumScore);
+    });
+
+    $("#answer2").on("click", function(){
+      that.incorrectAnswers++;
+      that.accumScore += 0;
+      clearInterval(scoreInterval);
+      $("#score").html("0");
+    });
+
+    $("#answer3").on("click", function(){
+      that.incorrectAnswers++;
+      that.accumScore += 0;
+      clearInterval(scoreInterval);
+      $("#score").html("0");
+    });
+
+    $("#answer4").on("click", function(){
+      that.incorrectAnswers++;
+      that.accumScore += 0;
+      clearInterval(scoreInterval);
+      $("#score").html("0");
+    });
 
     this.startingScore = 1000;
 
@@ -143,10 +177,11 @@ $("document").ready(function(){
 
     game.startScore();
     var progress = game.startProgress();
-    random = game.randomNoRepeats();
+    var random = game.randomNoRepeats();
+    var wrong = game.wrongAnswers(random);
 
     $("#question").html(game.displayQuestion(random));
-    $("#answer1").html(game.displayAnswers(random));
+    $("#answer1").html(game.displayAnswer(random));
     $("go").disabled = true;
 
   }); //end on click event
